@@ -10,16 +10,17 @@ public class Serveur {
         Socket c = s.accept();
         InputStream is = c.getInputStream();
 
-        String text = new BufferedReader(
-                new InputStreamReader(is, StandardCharsets.UTF_8))
-                .lines()
-                .collect(Collectors.joining("\n"));
+        while(true) {
+            BufferedReader text = new BufferedReader(new InputStreamReader(is));
 
-        int y = is.read();
-        String x = Integer.toString(y);
-        //System.out.println(text);
-        System.out.println(is);
-        c.close();
+            String y = text.readLine();
+            if(y == null){
+                c.close();
+                s.close();
+                break;
+            }
+            System.out.println(y);
+        }
 
     }
 }
